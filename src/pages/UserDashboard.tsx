@@ -12,8 +12,10 @@ const UserDashboard = () => {
 
   return (
     <div>
-      <h1>Welcome, User! 👤</h1>
-      <p>This is your dashboard.</p>
+      <h1>Welcome, User!</h1>
+      <button onClick={() => navigate("/user/shopping-list")}>
+        View Shopping List 
+      </button>
       <button onClick={handleLogout}>Logout</button>
     </div>
   );

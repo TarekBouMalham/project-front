@@ -12,8 +12,10 @@ const AdminDashboard = () => {
 
   return (
     <div>
-      <h1>Welcome, Admin! 🛡️</h1>
-      <p>This is your admin dashboard.</p>
+      <h1>Welcome, Admin!</h1>
+      <button onClick={() => navigate("/admin/shopping-list")}>
+        Manage Shopping List 
+      </button>
       <button onClick={handleLogout}>Logout</button>
     </div>
   );
