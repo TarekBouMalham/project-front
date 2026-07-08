@@ -1,5 +1,26 @@
+import axios from "axios";
+import { useEffect, useState } from "react";
 import { useAuth } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
+
+type AdminItem = {
+  _id: string;
+  name: string;
+  price: number;
+  quantity: number;
+  category: string;
+  description: string;
+  image: string;
+};
+
+const emptyForm = {
+  name: "",
+  price: 0,
+  quantity: 0,
+  category: "",
+  description: "",
+  image: "",
+};
 
 const AdminDashboard = () => {
   const { logout } = useAuth();
