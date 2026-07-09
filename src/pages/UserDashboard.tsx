@@ -11,29 +11,22 @@ const UserDashboard = () => {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 px-4 py-10 text-slate-800 sm:px-6 lg:px-8">
-      <div className="mx-auto max-w-6xl">
-        <div className="rounded-[2rem] border border-slate-200 bg-white p-8 shadow-xl shadow-slate-200/70 sm:p-10">
-          <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-            <div>
-              <div className="mb-3 inline-flex rounded-full bg-sky-100 px-3 py-1 text-sm font-medium text-sky-700">
-                User dashboard
-              </div>
-              <h1 className="text-3xl font-semibold tracking-tight text-slate-900 sm:text-4xl">
-                Welcome back, user.
-              </h1>
-              <p className="mt-3 max-w-2xl text-lg text-slate-600">
-                Your space is ready. Keep track of your work and stay on top of what matters.
-              </p>
-            </div>
-            <button
-              type="button"
-              onClick={handleLogout}
-              className="rounded-2xl border border-slate-200 px-4 py-2 font-medium text-slate-700 transition hover:border-slate-300 hover:bg-slate-100"
-            >
-              Logout
-            </button>
-          </div>
+    <div className="min-h-screen bg-gray-50 px-4 py-8">
+      <div className="max-w-3xl mx-auto bg-white rounded-lg shadow p-6">
+        <h1 className="text-2xl font-semibold mb-4">Welcome, User!</h1>
+        <div className="flex gap-3">
+          <button
+            className="bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700"
+            onClick={() => navigate('/user/shopping-list')}
+          >
+            View Shopping List
+          </button>
+          <button
+            className="border border-gray-300 px-4 py-2 rounded hover:bg-gray-100"
+            onClick={handleLogout}
+          >
+            Logout
+          </button>
         </div>
       </div>
     </div>
