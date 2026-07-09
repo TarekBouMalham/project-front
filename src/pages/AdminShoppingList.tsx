@@ -19,7 +19,7 @@ const AdminShoppingList = () => {
     try {
       const res = await axios.get("/api/items");
       setItems(res.data);
-    } catch (err) {
+    } catch {
       setError("Failed to load items");
     }
   };
@@ -37,7 +37,7 @@ const AdminShoppingList = () => {
       });
       setForm({ name: "", price: "", quantity: "", category: "", description: "", image: "" });
       fetchItems();
-    } catch (err) {
+    } catch {
       setError("Failed to add item");
     }
   };
@@ -65,7 +65,7 @@ const AdminShoppingList = () => {
       setEditingItem(null);
       setForm({ name: "", price: "", quantity: "", category: "", description: "", image: "" });
       fetchItems();
-    } catch (err) {
+    } catch {
       setError("Failed to update item");
     }
   };
@@ -74,7 +74,7 @@ const AdminShoppingList = () => {
     try {
       await axios.delete(`/api/items/${id}`);
       fetchItems();
-    } catch (err) {
+    } catch {
       setError("Failed to delete item");
     }
   };
@@ -85,52 +85,81 @@ const AdminShoppingList = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 px-4 py-8">
-      <div className="max-w-5xl mx-auto">
-        <div className="bg-white rounded-lg shadow p-6 mb-6">
-          <h1 className="text-2xl font-semibold mb-2">Admin Shopping List</h1>
-          {error && <p className="text-red-600 mb-2">{error}</p>}
-
-          <h2 className="text-lg font-medium mt-4 mb-3">{editingItem ? 'Edit Item' : 'Add New Item'}</h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-            <input className="border border-gray-300 rounded px-3 py-2" placeholder="Name" value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} />
-            <input className="border border-gray-300 rounded px-3 py-2" placeholder="Price" value={form.price} onChange={(e) => setForm({ ...form, price: e.target.value })} />
-            <input className="border border-gray-300 rounded px-3 py-2" placeholder="Quantity" value={form.quantity} onChange={(e) => setForm({ ...form, quantity: e.target.value })} />
-            <input className="border border-gray-300 rounded px-3 py-2" placeholder="Category" value={form.category} onChange={(e) => setForm({ ...form, category: e.target.value })} />
-            <input className="border border-gray-300 rounded px-3 py-2 sm:col-span-2" placeholder="Description" value={form.description} onChange={(e) => setForm({ ...form, description: e.target.value })} />
-            <input className="border border-gray-300 rounded px-3 py-2 sm:col-span-2" placeholder="Image URL" value={form.image} onChange={(e) => setForm({ ...form, image: e.target.value })} />
+    <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-800 to-slate-700 px-4 py-8 text-slate-100 sm:px-6 lg:px-8">
+      <div className="mx-auto max-w-6xl space-y-6">
+        <div className="rounded-3xl border border-white/10 bg-white/10 p-8 shadow-2xl shadow-slate-950/30 backdrop-blur-xl sm:p-10">
+          <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+            <div>
+              <p className="text-sm font-medium uppercase tracking-[0.3em] text-violet-300">Admin controls</p>
+              <h1 className="mt-2 text-3xl font-semibold text-white">Manage your catalog</h1>
+            </div>
+            <p className="text-sm text-slate-300">Add fresh items and keep your inventory up to date in one place.</p>
           </div>
 
-          <div className="mt-4">
-            {editingItem ? (
-              <>
-                <button className="bg-green-600 text-white px-4 py-2 rounded mr-2" onClick={handleUpdate}>Update Item</button>
-                <button className="border border-gray-300 px-4 py-2 rounded" onClick={handleCancelEdit}>Cancel</button>
-              </>
-            ) : (
-              <button className="bg-indigo-600 text-white px-4 py-2 rounded" onClick={handleAdd}>Add Item</button>
-            )}
+          {error && (
+            <div className="mt-6 rounded-2xl border border-rose-400/40 bg-rose-500/10 px-4 py-3 text-sm text-rose-200">
+              {error}
+            </div>
+          )}
+
+          <div className="mt-8 rounded-2xl border border-white/10 bg-slate-900/40 p-6">
+            <h2 className="text-xl font-semibold text-white">{editingItem ? "Edit Item" : "Add New Item"}</h2>
+            <div className="mt-4 grid gap-3 sm:grid-cols-2">
+              <input className="rounded-2xl border border-white/10 bg-slate-950/60 px-4 py-3 text-sm text-white outline-none transition focus:border-violet-400" placeholder="Name" value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} />
+              <input className="rounded-2xl border border-white/10 bg-slate-950/60 px-4 py-3 text-sm text-white outline-none transition focus:border-violet-400" placeholder="Price" value={form.price} onChange={(e) => setForm({ ...form, price: e.target.value })} />
+              <input className="rounded-2xl border border-white/10 bg-slate-950/60 px-4 py-3 text-sm text-white outline-none transition focus:border-violet-400" placeholder="Quantity" value={form.quantity} onChange={(e) => setForm({ ...form, quantity: e.target.value })} />
+              <input className="rounded-2xl border border-white/10 bg-slate-950/60 px-4 py-3 text-sm text-white outline-none transition focus:border-violet-400" placeholder="Category" value={form.category} onChange={(e) => setForm({ ...form, category: e.target.value })} />
+              <input className="rounded-2xl border border-white/10 bg-slate-950/60 px-4 py-3 text-sm text-white outline-none transition focus:border-violet-400 sm:col-span-2" placeholder="Description" value={form.description} onChange={(e) => setForm({ ...form, description: e.target.value })} />
+              <input className="rounded-2xl border border-white/10 bg-slate-950/60 px-4 py-3 text-sm text-white outline-none transition focus:border-violet-400 sm:col-span-2" placeholder="Image URL" value={form.image} onChange={(e) => setForm({ ...form, image: e.target.value })} />
+            </div>
+
+            <div className="mt-5 flex flex-wrap gap-3">
+              {editingItem ? (
+                <>
+                  <button type="button" className="rounded-2xl bg-gradient-to-r from-emerald-500 to-teal-500 px-4 py-3 font-medium text-white shadow-lg shadow-emerald-500/20 transition hover:-translate-y-0.5" onClick={handleUpdate}>Update item</button>
+                  <button type="button" className="rounded-2xl border border-white/15 bg-slate-900/40 px-4 py-3 font-medium text-slate-200 transition hover:bg-slate-900/60" onClick={handleCancelEdit}>Cancel</button>
+                </>
+              ) : (
+                <button type="button" className="rounded-2xl bg-gradient-to-r from-violet-500 to-sky-500 px-4 py-3 font-medium text-white shadow-lg shadow-violet-500/20 transition hover:-translate-y-0.5" onClick={handleAdd}>Add item</button>
+              )}
+            </div>
           </div>
         </div>
 
-        <div>
-          <h2 className="text-lg font-medium mb-3">All Items</h2>
+        <div className="rounded-3xl border border-white/10 bg-white/10 p-8 shadow-2xl shadow-slate-950/30 backdrop-blur-xl sm:p-10">
+          <div className="flex items-center justify-between gap-3">
+            <h2 className="text-xl font-semibold text-white">All items</h2>
+            <span className="rounded-full border border-white/15 bg-slate-900/40 px-3 py-1 text-sm text-slate-300">{items.length} total</span>
+          </div>
+
           {items.length === 0 ? (
-            <p className="text-gray-500">No items yet.</p>
+            <div className="mt-6 rounded-2xl border border-dashed border-white/20 bg-slate-900/40 p-8 text-center">
+              <p className="text-lg font-medium text-white">No items yet.</p>
+              <p className="mt-2 text-sm text-slate-400">Start by adding the first product to your catalog.</p>
+            </div>
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="mt-6 grid gap-4 lg:grid-cols-2">
               {items.map((item) => (
-                <div key={item._id} className="bg-white rounded shadow p-4 flex gap-4">
-                  <img src={item.image} alt={item.name} className="w-32 h-24 object-cover rounded" />
-                  <div className="flex-1">
-                    <h3 className="text-lg font-medium">{item.name}</h3>
-                    <p className="text-sm text-gray-600">Category: {item.category}</p>
-                    <p className="text-sm text-gray-600">Price: ${item.price}</p>
-                    <p className="text-sm text-gray-600">Quantity: {item.quantity}</p>
-                    <p className="mt-2 text-gray-700">{item.description}</p>
-                    <div className="mt-3">
-                      <button className="bg-yellow-500 text-white px-3 py-1 rounded mr-2" onClick={() => handleEditClick(item)}>Edit</button>
-                      <button className="bg-red-500 text-white px-3 py-1 rounded" onClick={() => handleDelete(item._id)}>Delete</button>
+                <div key={item._id} className="flex flex-col overflow-hidden rounded-2xl border border-white/10 bg-slate-900/50 shadow-lg shadow-slate-950/20 sm:flex-row">
+                  <img src={item.image} alt={item.name} className="h-40 w-full object-cover sm:h-auto sm:w-32" />
+                  <div className="flex-1 p-5">
+                    <div className="flex items-start justify-between gap-3">
+                      <div>
+                        <h3 className="text-lg font-semibold text-white">{item.name}</h3>
+                        <p className="mt-1 text-sm text-slate-400">{item.category}</p>
+                      </div>
+                      <span className="rounded-full border border-violet-400/30 bg-violet-500/10 px-3 py-1 text-xs font-medium text-violet-200">
+                        {item.quantity} left
+                      </span>
+                    </div>
+                    <div className="mt-4 space-y-1 text-sm text-slate-300">
+                      <p>Price: ${item.price}</p>
+                      <p>Quantity: {item.quantity}</p>
+                    </div>
+                    <p className="mt-4 text-sm text-slate-400">{item.description}</p>
+                    <div className="mt-4 flex flex-wrap gap-3">
+                      <button type="button" className="rounded-xl bg-amber-500/90 px-3 py-2 text-sm font-medium text-white transition hover:bg-amber-500" onClick={() => handleEditClick(item)}>Edit</button>
+                      <button type="button" className="rounded-xl bg-rose-500/90 px-3 py-2 text-sm font-medium text-white transition hover:bg-rose-500" onClick={() => handleDelete(item._id)}>Delete</button>
                     </div>
                   </div>
                 </div>
