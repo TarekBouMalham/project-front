@@ -6,44 +6,38 @@ import AdminDashboard from "./pages/AdminDashboard";
 import UserShoppingList from "./pages/UserShoppingList";
 import AdminShoppingList from "./pages/AdminShoppingList";
 import ProtectedRoute from "./components/ProtectedRoute";
+import DashboardLayout from "./components/DashboardLayout";
+import AdminUserList from "./pages/AdminUserList";
 
 function App() {
   return (
     <Routes>
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
+
       <Route
-        path="/user/dashboard"
         element={
           <ProtectedRoute allowedRole="user">
-            <UserDashboard />
+            <DashboardLayout />
           </ProtectedRoute>
         }
-      />
+      >
+        <Route path="/user/dashboard" element={<UserDashboard />} />
+        <Route path="/user/shopping-list" element={<UserShoppingList />} />
+      </Route>
+
       <Route
-        path="/admin/dashboard"
         element={
           <ProtectedRoute allowedRole="admin">
-            <AdminDashboard />
+            <DashboardLayout />
           </ProtectedRoute>
         }
-      />
-      <Route
-        path="/user/shopping-list"
-        element={
-          <ProtectedRoute allowedRole="user">
-            <UserShoppingList />
-          </ProtectedRoute>
-        }
-      />
-      <Route
-        path="/admin/shopping-list"
-        element={
-          <ProtectedRoute allowedRole="admin">
-            <AdminShoppingList />
-          </ProtectedRoute>
-        }
-      />
+      >
+        <Route path="/admin/dashboard" element={<AdminDashboard />} />
+        <Route path="/admin/shopping-list" element={<AdminShoppingList />} />
+        <Route path="/admin/users" element={<AdminUserList />} />
+      </Route>
+
       <Route path="*" element={<Navigate to="/login" />} />
     </Routes>
   );
