@@ -35,7 +35,9 @@ const Register = () => {
       <div className="mx-auto flex min-h-[calc(100vh-5rem)] max-w-4xl items-center justify-center">
         <div className="w-full max-w-md rounded-3xl border border-white/10 bg-white/10 p-8 shadow-2xl shadow-slate-950/30 backdrop-blur-xl">
           <h2 className="text-2xl font-semibold text-white">Register</h2>
-          <p className="mt-2 text-sm text-slate-300">Set up your account below.</p>
+          <p className="mt-2 text-sm text-slate-300">
+            Set up your account below.
+          </p>
 
           <form className="mt-6 space-y-4" onSubmit={handleRegister}>
             {error && (
@@ -50,7 +52,10 @@ const Register = () => {
             )}
 
             <div>
-              <label className="mb-2 block text-sm text-slate-200" htmlFor="username">
+              <label
+                className="mb-2 block text-sm text-slate-200"
+                htmlFor="username"
+              >
                 Username
               </label>
               <input
@@ -64,7 +69,10 @@ const Register = () => {
             </div>
 
             <div>
-              <label className="mb-2 block text-sm text-slate-200" htmlFor="email">
+              <label
+                className="mb-2 block text-sm text-slate-200"
+                htmlFor="email"
+              >
                 Email
               </label>
               <input
@@ -78,7 +86,10 @@ const Register = () => {
             </div>
 
             <div>
-              <label className="mb-2 block text-sm text-slate-200" htmlFor="password">
+              <label
+                className="mb-2 block text-sm text-slate-200"
+                htmlFor="password"
+              >
                 Password
               </label>
               <input
@@ -92,7 +103,10 @@ const Register = () => {
             </div>
 
             <div>
-              <label className="mb-2 block text-sm text-slate-200" htmlFor="role">
+              <label
+                className="mb-2 block text-sm text-slate-200"
+                htmlFor="role"
+              >
                 Role
               </label>
               <select
@@ -102,7 +116,6 @@ const Register = () => {
                 className="w-full rounded-2xl border border-white/10 bg-slate-900/60 px-4 py-3 text-sm text-white outline-none transition focus:border-violet-400"
               >
                 <option value="user">User</option>
-                <option value="admin">Admin</option>
               </select>
             </div>
 
