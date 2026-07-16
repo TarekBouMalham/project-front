@@ -1,14 +1,20 @@
 import axios from "axios";
 import type { IItem } from "../types/Item";
 import { useEffect, useState } from "react";
+import { useAuth } from "../context/AuthContext";
 
 const UserShoppingList = () => {
   const [items, setItems] = useState<IItem[]>([]);
   const [error, setError] = useState<string | null>(null);
+  const auth = useAuth();
 
   const fetchItems = async () => {
     try {
-      const res = await axios.get("/api/items");
+      const res = await axios.get("/api/items", {
+        headers: {
+          Authorization: `Bearer ${auth?.token}`,
+        },
+      });
       setItems(res.data);
     } catch {
       setError("Failed to load items");

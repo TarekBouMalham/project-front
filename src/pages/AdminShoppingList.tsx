@@ -1,11 +1,13 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import type { IItem } from "../types/Item";
+import { useAuth } from "../context/AuthContext";
 
 const AdminShoppingList = () => {
   const [items, setItems] = useState<IItem[]>([]);
   const [error, setError] = useState("");
   const [editingItem, setEditingItem] = useState<IItem | null>(null);
+  const auth = useAuth();
   const [form, setForm] = useState({
     name: "",
     price: "",
@@ -15,9 +17,15 @@ const AdminShoppingList = () => {
     image: "",
   });
 
+  const getHeaders = () => ({
+    headers: {
+      Authorization: `Bearer ${auth?.token}`,
+    },
+  });
+
   const fetchItems = async () => {
     try {
-      const res = await axios.get("/api/items");
+      const res = await axios.get("/api/items", getHeaders());
       setItems(res.data);
     } catch {
       setError("Failed to load items");
@@ -30,11 +38,15 @@ const AdminShoppingList = () => {
 
   const handleAdd = async () => {
     try {
-      await axios.post("/api/items", {
-        ...form,
-        price: Number(form.price),
-        quantity: Number(form.quantity),
-      });
+      await axios.post(
+        "/api/items",
+        {
+          ...form,
+          price: Number(form.price),
+          quantity: Number(form.quantity),
+        },
+        getHeaders(),
+      );
       setForm({
         name: "",
         price: "",
@@ -64,11 +76,15 @@ const AdminShoppingList = () => {
   const handleUpdate = async () => {
     if (!editingItem) return;
     try {
-      await axios.patch(`/api/items/${editingItem._id}`, {
-        ...form,
-        price: Number(form.price),
-        quantity: Number(form.quantity),
-      });
+      await axios.patch(
+        `/api/items/${editingItem._id}`,
+        {
+          ...form,
+          price: Number(form.price),
+          quantity: Number(form.quantity),
+        },
+        getHeaders(),
+      );
       setEditingItem(null);
       setForm({
         name: "",
@@ -86,7 +102,7 @@ const AdminShoppingList = () => {
 
   const handleDelete = async (id: string) => {
     try {
-      await axios.delete(`/api/items/${id}`);
+      await axios.delete(`/api/items/${id}`, getHeaders());
       fetchItems();
     } catch {
       setError("Failed to delete item");

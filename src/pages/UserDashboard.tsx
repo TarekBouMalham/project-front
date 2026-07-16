@@ -16,41 +16,37 @@ const UserDashboard = () => {
         <div className="rounded-3xl border border-white/10 bg-white/10 p-8 shadow-2xl shadow-slate-950/30 backdrop-blur-xl sm:p-10">
           <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
             <div>
-              <p className="text-sm font-medium uppercase tracking-[0.3em] text-sky-300">Welcome back</p>
-              <h1 className="mt-2 text-3xl font-semibold text-white">Your personal shopping hub</h1>
-              <p className="mt-3 max-w-2xl text-sm text-slate-300 sm:text-base">
-                Review your list, keep track of essentials, and jump right back into planning your next trip.
+              <p className="text-sm font-medium uppercase tracking-[0.3em] text-sky-300">
+                Welcome back
               </p>
-            </div>
-
-            <div className="flex flex-wrap gap-3">
-              <button
-                type="button"
-                className="rounded-2xl bg-gradient-to-r from-sky-500 to-violet-500 px-4 py-3 font-medium text-white shadow-lg shadow-sky-500/20 transition hover:-translate-y-0.5"
-                onClick={() => navigate("/user/shopping-list")}
-              >
-                View shopping list
-              </button>
-              <button
-                type="button"
-                className="rounded-2xl border border-white/15 bg-slate-900/40 px-4 py-3 font-medium text-slate-200 transition hover:bg-slate-900/60"
-                onClick={handleLogout}
-              >
-                Logout
-              </button>
+              <h1 className="mt-2 text-3xl font-semibold text-white">
+                Your personal shopping hub
+              </h1>
+              <p className="mt-3 max-w-2xl text-sm text-slate-300 sm:text-base">
+                Review your list, keep track of essentials, and jump right back
+                into planning your next trip.
+              </p>
             </div>
           </div>
 
           <div className="mt-8 grid gap-4 md:grid-cols-2">
             <div className="rounded-2xl border border-white/10 bg-slate-900/40 p-5">
               <p className="text-sm text-slate-300">Current focus</p>
-              <p className="mt-2 text-xl font-semibold text-white">Fresh picks and essentials</p>
-              <p className="mt-2 text-sm text-slate-400">Stay organized with a clean view of everything you need.</p>
+              <p className="mt-2 text-xl font-semibold text-white">
+                Fresh picks and essentials
+              </p>
+              <p className="mt-2 text-sm text-slate-400">
+                Stay organized with a clean view of everything you need.
+              </p>
             </div>
             <div className="rounded-2xl border border-white/10 bg-slate-900/40 p-5">
               <p className="text-sm text-slate-300">Quick action</p>
-              <p className="mt-2 text-xl font-semibold text-white">One tap away</p>
-              <p className="mt-2 text-sm text-slate-400">Open your shopping list instantly and keep the next plan moving.</p>
+              <p className="mt-2 text-xl font-semibold text-white">
+                One tap away
+              </p>
+              <p className="mt-2 text-sm text-slate-400">
+                Open your shopping list instantly and keep the next plan moving.
+              </p>
             </div>
           </div>
         </div>

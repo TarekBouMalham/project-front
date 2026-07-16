@@ -1,14 +1,20 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import type { IUser } from "../types/User";
+import { useAuth } from "../context/AuthContext";
 
 const AdminUserList = () => {
   const [users, setUsers] = useState<IUser[]>([]);
   const [error, setError] = useState("");
+  const auth = useAuth();
 
   const fetchUsers = async () => {
     try {
-      const res = await axios.get("/api/auth");
+      const res = await axios.get("/api/auth", {
+        headers: {
+          Authorization: `Bearer ${auth?.token}`,
+        },
+      });
       setUsers(res.data);
     } catch {
       setError("Failed to load users");
