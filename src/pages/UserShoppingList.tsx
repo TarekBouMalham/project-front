@@ -2,6 +2,7 @@ import axios from "axios";
 import type { IItem } from "../types/Item";
 import { useEffect, useState } from "react";
 import { useAuth } from "../context/AuthContext";
+import { getImageUrl } from "../utils/normalizeImageUrl";
 
 const UserShoppingList = () => {
   const [items, setItems] = useState<IItem[]>([]);
@@ -65,11 +66,15 @@ const UserShoppingList = () => {
                     key={item._id}
                     className="overflow-hidden rounded-2xl border border-white/10 bg-slate-900/50 shadow-lg shadow-slate-950/20"
                   >
-                    <img
-                      src={item.image}
-                      alt={item.name}
-                      className="h-40 w-full object-cover"
-                    />
+                    <div className="overflow-hidden rounded-t-2xl bg-slate-950">
+                      <div className="relative aspect-[4/3] w-full">
+                        <img
+                          src={getImageUrl(item.image)}
+                          alt={item.name}
+                          className="absolute inset-0 h-full w-full object-cover object-center"
+                        />
+                      </div>
+                    </div>
                     <div className="p-5">
                       <div className="flex items-center justify-between gap-3">
                         <h2 className="text-lg font-semibold text-white">
