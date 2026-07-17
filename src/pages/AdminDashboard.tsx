@@ -1,11 +1,17 @@
-import { useState, type FormEvent } from "react";
+import { useEffect, useState } from "react";
+import type { FormEvent } from "react";
 import axios from "axios";
 import { useAuth } from "../context/AuthContext";
-import { useNavigate } from "react-router-dom";
+
+interface AdminUser {
+  _id: string;
+  username: string;
+  email: string;
+  role: string;
+}
 
 const AdminDashboard = () => {
-  const { logout, role, token } = useAuth();
-  const navigate = useNavigate();
+  const { role, token } = useAuth();
   const [showAdminForm, setShowAdminForm] = useState(false);
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
@@ -13,11 +19,34 @@ const AdminDashboard = () => {
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [admins, setAdmins] = useState<AdminUser[]>([]);
+  const [isLoadingAdmins, setIsLoadingAdmins] = useState(false);
+  const [adminsError, setAdminsError] = useState("");
 
-  const handleLogout = () => {
-    logout();
-    navigate("/login");
+  const loadAdmins = async () => {
+    if (!token || role !== "admin") {
+      setAdmins([]);
+      return;
+    }
+
+    setIsLoadingAdmins(true);
+    setAdminsError("");
+
+    try {
+      const response = await axios.get("/api/auth/admins", {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      setAdmins(response.data);
+    } catch {
+      setAdminsError("Unable to load admin accounts.");
+    } finally {
+      setIsLoadingAdmins(false);
+    }
   };
+
+  useEffect(() => {
+    void loadAdmins();
+  }, [role, token]);
 
   const handleCreateAdmin = async (event: FormEvent) => {
     event.preventDefault();
@@ -40,6 +69,7 @@ const AdminDashboard = () => {
         },
       );
 
+      await loadAdmins();
       setSuccess("New admin created successfully.");
       setUsername("");
       setEmail("");
@@ -73,13 +103,6 @@ const AdminDashboard = () => {
                 inventory from one polished workspace.
               </p>
             </div>
-            <button
-              type="button"
-              onClick={handleLogout}
-              className="rounded-2xl border border-white/10 bg-slate-900/60 px-4 py-2 text-sm font-medium text-slate-200 transition hover:bg-slate-800"
-            >
-              Logout
-            </button>
           </div>
 
           {role === "admin" && (
@@ -179,6 +202,57 @@ const AdminDashboard = () => {
                   </button>
                 </form>
               )}
+
+              <div className="mt-5 rounded-2xl border border-white/10 bg-slate-950/40 p-4">
+                <div className="flex items-center justify-between gap-3">
+                  <div>
+                    <p className="text-sm font-medium text-slate-200">
+                      Current admins
+                    </p>
+                    <p className="mt-1 text-sm text-slate-400">
+                      Review the administrators that can manage this workspace.
+                    </p>
+                  </div>
+                  <span className="rounded-full bg-violet-500/15 px-2.5 py-1 text-xs font-medium text-violet-200">
+                    {admins.length} {admins.length === 1 ? "admin" : "admins"}
+                  </span>
+                </div>
+
+                {isLoadingAdmins ? (
+                  <p className="mt-4 text-sm text-slate-400">
+                    Loading admins...
+                  </p>
+                ) : adminsError ? (
+                  <p className="mt-4 text-sm text-rose-200">{adminsError}</p>
+                ) : admins.length === 0 ? (
+                  <p className="mt-4 text-sm text-slate-400">
+                    No admin accounts found yet.
+                  </p>
+                ) : (
+                  <ul className="mt-4 space-y-3">
+                    {admins.map((admin) => (
+                      <li
+                        key={admin._id}
+                        className="rounded-2xl border border-white/10 bg-slate-900/70 px-4 py-3"
+                      >
+                        <div className="flex flex-col gap-1 sm:flex-row sm:items-center sm:justify-between">
+                          <div>
+                            <p className="text-sm font-medium text-white">
+                              {admin.username}
+                            </p>
+                            <p className="text-sm text-slate-400">
+                              {admin.email}
+                            </p>
+                          </div>
+                          <span className="rounded-full bg-emerald-500/10 px-2.5 py-1 text-xs font-medium uppercase tracking-[0.2em] text-emerald-200">
+                            {admin.role}
+                          </span>
+                        </div>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </div>
             </div>
           )}
 
