@@ -11,11 +11,13 @@ const Header = () => {
           { to: "/admin/dashboard", label: "Dashboard" },
           { to: "/admin/shopping-list", label: "Shopping List" },
           { to: "/admin/users", label: "Users" },
+          { to: "/admin/orders", label: "Orders" },
         ]
       : role === "user"
         ? [
             { to: "/user/dashboard", label: "Dashboard" },
             { to: "/user/shopping-list", label: "Shopping List" },
+            { to: "/user/orders", label: "Orders" },
           ]
         : [];
 

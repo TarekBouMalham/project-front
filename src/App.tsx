@@ -8,6 +8,8 @@ import AdminShoppingList from "./pages/AdminShoppingList";
 import ProtectedRoute from "./components/ProtectedRoute";
 import DashboardLayout from "./components/DashboardLayout";
 import AdminUserList from "./pages/AdminUserList";
+import UserOrders from "./pages/UserOrders";
+import AdminOrders from "./pages/AdminOrders";
 
 function App() {
   return (
@@ -24,6 +26,7 @@ function App() {
       >
         <Route path="/user/dashboard" element={<UserDashboard />} />
         <Route path="/user/shopping-list" element={<UserShoppingList />} />
+        <Route path="/user/orders" element={<UserOrders />} />
       </Route>
 
       <Route
@@ -36,6 +39,7 @@ function App() {
         <Route path="/admin/dashboard" element={<AdminDashboard />} />
         <Route path="/admin/shopping-list" element={<AdminShoppingList />} />
         <Route path="/admin/users" element={<AdminUserList />} />
+        <Route path="/admin/orders" element={<AdminOrders />} />
       </Route>
 
       <Route path="*" element={<Navigate to="/login" />} />

@@ -7,3 +7,8 @@ export interface IItem {
   description: string;
   image: string;
 }
+
+export interface ICartItem {
+  item: IItem;
+  quantity: number;
+}
