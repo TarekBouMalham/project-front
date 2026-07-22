@@ -109,14 +109,12 @@ const Register = () => {
               >
                 Role
               </label>
-              <select
+              <div
                 id="role"
-                value={role}
-                onChange={(e) => setRole(e.target.value)}
-                className="w-full rounded-2xl border border-white/10 bg-slate-900/60 px-4 py-3 text-sm text-white outline-none transition focus:border-violet-400"
+                className="w-full rounded-2xl border border-white/10 bg-slate-900/60 px-4 py-3 text-sm text-white"
               >
-                <option value="user">User</option>
-              </select>
+                User
+              </div>
             </div>
 
             <button
